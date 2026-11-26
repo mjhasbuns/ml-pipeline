@@ -100,6 +100,6 @@ I used Claude Code (an AI coding assistant) for most of the writing:
 - `discovery.py` and `main.py`
 - drafting this README, including the written answers
 
-I chose the dataset, ran the API locally, tested it in `/docs`, took the screenshots, chose the prediction experiment (changing `Contract`), and reviewed the answers against my own results. I split it this way because the code is mostly standard boilerplate from the class examples, and I wanted to spend my time on checking the results and understanding the decisions.
+I chose the dataset, ran the API locally, tested it in `/docs`, took the screenshots, ran the prediction experiment (changing `Contract`), and reviewed the answers against my own results. I split it this way because the code is mostly standard boilerplate from the class examples, and I wanted to spend my time on checking the results and understanding the decisions.
 
-One thing I had to correct: PyCaret's "Recall" column equals its Accuracy (0.8024), which looked like a great recall score. It turned out to be a weighted average over both classes. The real recall for churners is only 0.56, and that changed my answer about which metric matters. I also checked that the scikit-learn model uses the same settings as PyCaret's best model by printing its parameters.
+One thing that needed correcting: PyCaret's "Recall" column equals its Accuracy (0.8024), which looked like a great recall score. It is actually a weighted average over both classes, which the AI pointed out and I confirmed against the comparison table. The real recall for churners is only 0.56, and that changed my answer about which metric matters. I also checked that the scikit-learn model uses the same settings as PyCaret's best model by printing its parameters.
