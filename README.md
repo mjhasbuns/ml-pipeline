@@ -95,11 +95,6 @@ This makes sense for the business. A customer on a two-year contract is locked i
 
 ## AI use
 
-I used Claude Code (an AI coding assistant) to write:
-- the project setup and package installs
-- `discovery.py` (the PyCaret and scikit-learn workflows)
-- `main.py` (the FastAPI app)
+I had Claude write the boilerplate: the FastAPI app in main.py, the PyCaret section of discovery.py, and the setup instructions in this README. These follow standard patterns from the class examples, so writing them by hand wouldn't teach me much. I wrote the scikit-learn pipeline myself because the ColumnTransformer and Pipeline are the core skills of this assignment, and I used Claude only to debug errors. I also wrote the comparison and the prediction experiment myself, since those are my own analysis.
 
-I chose the dataset and ran the API on my own computer. I wrote this README, including the written answers. I tested it in `/docs`, took the screenshots, ran the prediction experiment and reviewed the README against my results. I split it this way because the assignment says much of this code is standard boilerplate that an AI writes well. I focused on running the project, testing it and checking that the results and explanations were correct.
-
-One thing that needed correcting: PyCaret's "Recall" column equals its Accuracy (0.8024), which looked like a great recall score. It is actually a weighted average over both classes, which the AI pointed out and I confirmed against the comparison table. The real recall for churners is only 0.56, and that changed the answer about which metric matters. I also checked that the scikit-learn model uses the same settings as PyCaret's best model by comparing the printed parameters.
+One thing I had to fix: Claude's Pydantic class required TotalCharges to be a number, but new customers (tenure 0) have no total yet, which is why the dataset has blanks. The API returned a 422 error for them even though the pipeline can fill in missing values. I made the field optional (float | None = None) and tested a tenure-0 customer in /docs.
