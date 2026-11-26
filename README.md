@@ -95,7 +95,7 @@ This makes sense for the business. A customer on a two-year contract is locked i
 
 ## AI use
 
-I first wrote the scikit-learn pipeline, the FastAPI app and the written answers myself, in a separate practice repo. For this final repo I used Claude Code (an AI coding assistant) to:
+I  wrote the scikit-learn pipeline, the FastAPI app and the written answers myself. I used Claude Code (an AI coding assistant) to:
 - set up the project and install the packages
 - write the PyCaret calls and turn the comparison table into an image
 - type the 19 fields of the Pydantic class
