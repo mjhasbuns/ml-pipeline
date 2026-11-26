@@ -95,12 +95,12 @@ This makes sense for the business. A customer on a two-year contract is locked i
 
 ## AI use
 
-I  wrote the scikit-learn pipeline, the FastAPI app and the written answers myself. I used Claude Code (an AI coding assistant) to:
+I wrote my own scikit-learn pipeline, FastAPI app and written answers first, in a separate practice repo. For this final repo I used Claude Code (an AI coding assistant) to:
 - set up the project and install the packages
 - write the PyCaret calls and turn the comparison table into an image
 - type the 19 fields of the Pydantic class
 - format the README (headings, tables, embedded images)
 
-It also produced the versions of `discovery.py`, `main.py` and the README answers that are in this repo, which I compared against my own work. I chose the dataset, ran and tested the API in `/docs`, took the screenshots and ran the prediction experiment. I split it this way because I wanted to write the core modelling and serving code myself first to learn it, and let the AI handle the repetitive setup and formatting.
+Claude Code also wrote the versions of `discovery.py`, `main.py` and the README answers that are submitted here. I compared them with my own versions before using them. I chose the dataset, ran and tested the API in `/docs`, took the screenshots and ran the prediction experiment. I split it this way because I wanted to write the core modelling and serving code myself first to learn it, and let the AI handle the repetitive setup and formatting.
 
 One thing that needed correcting: PyCaret's "Recall" column equals its Accuracy (0.8024), which looked like a great recall score. It is actually a weighted average over both classes, which the AI pointed out and I confirmed against the comparison table. The real recall for churners is only 0.56, and that changed my answer about which metric matters. I also checked that the scikit-learn model uses the same settings as PyCaret's best model by printing its parameters.
