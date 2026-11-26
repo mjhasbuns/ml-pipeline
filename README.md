@@ -55,7 +55,7 @@ weighted avg     0.8011    0.8088    0.8033      2113
 
 **Why the scores differ.** PyCaret reports the average of 10 cross-validation folds on the training data: accuracy 0.8024, AUC 0.8451. My classification report uses one held-out test set: accuracy 0.8088. A single test split is one sample, so it lands a little above or below the CV average. The preprocessing is also slightly different: I scale numeric columns, and PyCaret doesn't by default. Also, PyCaret's Recall/Prec./F1 columns are **weighted averages over both classes**, which is why its Recall (0.8024) equals its Accuracy. Recall for the churn class alone is much lower: 0.5615 in my report.
 
-**Most important metric.** <!-- TODO: write this yourself (2–3 sentences). Which metric, and why for THIS business? Hint: compare the cost of missing a customer who leaves (false negative) with the cost of a retention offer sent to someone who would have stayed (false positive). Use the churn-class recall of 0.5615. -->
+**Most important metric.** For this problem I care most about **recall on the churn class**. Missing a customer who is about to leave (a false negative) means losing their monthly bill for good. Flagging someone who would have stayed (a false positive) only costs us a discount or a phone call. My model's churn recall is 0.5615, so it misses about 44% of the customers who actually leave. Accuracy looks good at 0.81, but the model could get 73% just by predicting "No" for everyone, so accuracy isn't a good measure here. To improve recall I would try `class_weight="balanced"` or a lower decision threshold, even if precision drops a bit.
 
 ## Part 3: Serving the model
 
@@ -91,13 +91,15 @@ The two inputs are identical except for `Contract`. The second request is shown 
 
 ![Prediction with a two-year contract](images/prediction_two_year.png)
 
-<!-- TODO: write this yourself (2–3 sentences). Does this change make business sense? Why would a customer on a two-year contract be less likely to churn? -->
+This makes sense for the business. A customer on a two-year contract is locked in and would have to pay a fee to leave early. Someone who signs for two years is probably already happy with the service. The data agrees: 42.7% of month-to-month customers churned, compared with only 2.8% of two-year customers. The probability is still 0.375 rather than close to 0, because the rest of this customer's profile is risky: only 2 months of tenure, fiber optic and electronic check, which are all linked to higher churn. One caution is that this is correlation, not cause. Moving a customer to a two-year contract won't automatically make them stay, but offering a discount for switching to a longer contract would be a reasonable retention offer to test.
 
 ## AI use
 
-<!-- TODO: write this yourself (a few sentences). Use AI_LOG.md for the facts:
-- What AI wrote: project setup, discovery.py, main.py, and a README draft with the numbers filled in
-- What you did: ran the API, took the screenshots, ran the prediction experiment, and wrote the metric choice, the business interpretation and this section
-- Why you split it that way
-- One thing you checked or fixed. For example: PyCaret's Recall column is a weighted average, not churn recall; or you confirmed the scikit-learn model uses the same settings as PyCaret's best model
--->
+I used Claude Code (an AI coding assistant) for most of the writing:
+- the project setup
+- `discovery.py` and `main.py`
+- drafting this README, including the written answers
+
+I chose the dataset, ran the API locally, tested it in `/docs`, took the screenshots, chose the prediction experiment (changing `Contract`), and reviewed the answers against my own results. I split it this way because the code is mostly standard boilerplate from the class examples, and I wanted to spend my time on checking the results and understanding the decisions.
+
+One thing I had to correct: PyCaret's "Recall" column equals its Accuracy (0.8024), which looked like a great recall score. It turned out to be a weighted average over both classes. The real recall for churners is only 0.56, and that changed my answer about which metric matters. I also checked that the scikit-learn model uses the same settings as PyCaret's best model by printing its parameters.
