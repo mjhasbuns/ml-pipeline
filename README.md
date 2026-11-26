@@ -6,7 +6,7 @@ A telecom company wants to know which customers are likely to cancel their servi
 
 **Dataset:** [Telco Customer Churn (Kaggle, BlastChar)](https://www.kaggle.com/datasets/blastchar/telco-customer-churn). It has 7,043 customers and 19 features (4 numeric, 15 categorical). The target is `Churn` (Yes/No): 26.5% of customers churned.
 
-- `data/Telco-Customer-Churn.csv` is the original file.
+- `data/Telco-Customer-Churn.csv` is the original file. It has the same data as Kaggle's `WA_Fn-UseC_-Telco-Customer-Churn.csv`; this copy comes from [IBM's GitHub mirror](https://github.com/IBM/telco-customer-churn-on-icp4d).
 - `data/telco_churn_clean.csv` is the cleaned version that `discovery.py` writes.
 
 **Dropped columns:**
